@@ -124,8 +124,8 @@ end
 # calculates the greek vega
 # https://en.wikipedia.org/wiki/Greeks_(finance)
 function get_vega(S, X, σ, r, t)
-    😄 = S  * √(t) * pdf(Normal(), calculate_d1(S, X, σ, r, t)) * 1/100
-    return(round(😄, digits=3))
+    vega = S  * √(t) * pdf(Normal(), calculate_d1(S, X, σ, r, t)) * 1/100
+    return(round(vega, digits=3))
 end
 
 # get_rho
@@ -147,7 +147,7 @@ function get_rho(S, X, σ, r, t, call = true)
         ρ = X * t * ℯ^(-r*t) * cdf(Normal(), calculate_d2(S, X, σ, r, t))
     elseif call == false
         # if it's a put, use the put formula
-        ρ = -X * t * -ℯ^(-r*t) * cdf(Normal(), -calculate_d2(S, X, σ, r, t))
+        ρ = -X * t * ℯ^(-r*t) * cdf(Normal(), -calculate_d2(S, X, σ, r, t))
     end
     return(round(ρ/100, digits=3))
 end
@@ -158,11 +158,11 @@ end
 # use this https://www.optionseducation.org/toolsoptionquotes/optionscalculator
 # to compare
 function test( )
-t = 6 / 12
-r = 0.05
-X = 50
-S = 52
-σ = 0.12
+t = 3 / 12
+r = 0.025
+X = 79
+S = 69
+σ = 0.80
 Data = zeros(6,2)
 Data[1,:] = [BSM_fair_value(S, X, σ, r, t), BSM_fair_value(S, X, σ, r, t, false)]
 Data[2,:] = [get_delta(S, X, σ, r, t), get_delta(S, X, σ, r, t, false)]
