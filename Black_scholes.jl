@@ -1,5 +1,7 @@
-# packages
+# @ author Nathanael Judge
+# A program that
 
+# packages
 # Distributions
 # needed for calculating the normal distribution
 # probabilities
