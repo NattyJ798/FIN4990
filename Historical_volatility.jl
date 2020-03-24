@@ -2,7 +2,7 @@
 # Conda.add("quandl")
 
 # Packages
-using PyCall, DataFrames
+using PyCall, DataFrames, CSV, Statistics
 
 
 # get_Stock( )
@@ -23,10 +23,44 @@ def get_stock(ticker, key_path = 'C:/Users/12699/Desktop/Quandl_key.txt', path =
     Date = date.datetime.now( )
     text_doc = ticker.split("/")[0]+ticker.split("/")[1]+"_"+str(Date.year)+str(Date.month)
     text_doc += str(Date.day) + str(Date.hour) + str(Date.minute) +".csv"
-    df.to_csv(text_doc, index = False, header = True)
-    return(text_doc)
+    df.to_csv(path+text_doc, index = False, header = True)
+    return(path+text_doc)
 """
 
+# read_file( )
+# reads in stock information
+# accepts the stock ticker
+# path to the quandl key text file
+# and path of where you want to save the file
+function read_file(ticker::String, key_path::String = "", path::String = "")
+    filename = py"get_stock"(ticker)
+    data = CSV.read(filename)
+    rm(filename)
+    return(data)
+end
+
+# calculate_historical_σ( )
+# calculates the historical voltility using the data acquired in
+# read_file
+# https://www.investopedia.com/ask/answers/021015/how-can-you-calculate-volatility-excel.asp
+function calculate_historical_σ(data::DataFrame)
+    column_names = names(data)
+    div = zeros(length(Test[1:end-1,:Open]),1)
+    if :Close in column_names
+        div = data[2:end,:Close]/data[1:end-1, :Close]
+    elseif :Last in column_names
+        div = data[2:end,:Last]/data[1:end-1, :Last]
+    end
+    return(Statistics.std(div) * √(252))
+
+end
+
+# get_historical_σ( )
+# gets the historical voltility for a given stock
+function get_historical_σ(ticker::String, key_path::String = "", path::String = "")
+    data = read_file(ticker, key_path, path)
+    return(calculate_historical_σ(data))
+end
 
 
 
