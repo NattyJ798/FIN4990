@@ -1,3 +1,6 @@
+# author Nathanael Judge(could we write a julia script)
+# notes
+
 # using Conda
 # Conda.add("quandl")
 
