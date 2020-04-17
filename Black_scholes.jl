@@ -142,7 +142,7 @@ function get_rho(S, X, σ, r, t, call = true)
     # otherwise, through a helpful error message
     if typeof(call) != Bool
         println("Call must be true or false.")
-        println("get_rho(52,50,0.12,0.05, 0.5, True)")
+        println("get_rho(52.0 ,50.0 ,0.12, 0.05, 0.5, True)")
         error()
     end
     if call == true
@@ -163,8 +163,8 @@ end
 function test( )
 t = 3 / 12
 r = 0.025
-X = 79
-S = 69
+X = 79.0
+S = 69.0
 σ = 0.80
 Data = zeros(6,2)
 Data[1,:] = [BSM_fair_value(S, X, σ, r, t), BSM_fair_value(S, X, σ, r, t, false)]

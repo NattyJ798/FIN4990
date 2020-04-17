@@ -3,6 +3,11 @@ pkg"activate ."
 
 
 include("Black_scholes.jl")
-using .Black_scholes
+include("Historical_volatility.jl")
+using .Black_scholes, .Historical_volatility
 
+# use this https://www.optionseducation.org/toolsoptionquotes/optionscalculator
+# to compare
 test()
+
+convertData( )
