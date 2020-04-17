@@ -1,12 +1,13 @@
 # @ author Nathanael Judge
 
-
+module Black_scholes
 # packages
 # Distributions
 # needed for calculating the normal distribution
 # probabilities
 using Random, Distributions, DataFrames
 
+export test
 # run_black_scholes
 # calculates black scholes price
 # accepts
@@ -174,4 +175,5 @@ Data[5,:] = [get_vega(S, X, σ, r, t), get_vega(S, X, σ, r, t)]
 Data[6,:] = [get_rho(S, X, σ, r, t), get_rho(S, X, σ, r, t, false)]
 df = DataFrame(Type = ["Option Value", "Δ", "γ", "θ", "Vega", "ρ"],Call = Data[:,1], Put = Data[:,2])
 print("$df")
+end
 end

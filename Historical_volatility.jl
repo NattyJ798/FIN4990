@@ -11,7 +11,7 @@ import pandas as pd
 import pandas_datareader.data as web
 import datetime
 
-def read_data(ticker, end_date, start_date):
+def read_data(ticker, end_date, start_date, data_source = 'yahoo'):
 
 
     historical_prices = web.DataReader(ticker, data_source='yahoo',start=start_date,end=end_date)
